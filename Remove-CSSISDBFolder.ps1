@@ -27,6 +27,11 @@ function Remove-CSSISDBFolder
     }
 
     Process{
+        
+        Write-Warning "Delete Projects first, contains Errors this ways"
+        Foreach($Project in $Folder.Projects){
+            Remove-CSSISDBProject -Folder $Folder -Projectname $Project.Name
+        }
         Write-Verbose -Message "Remove Folder"
         $Folder.Drop()
     }

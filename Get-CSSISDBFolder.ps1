@@ -36,7 +36,7 @@ function Get-CSSISDBFolder
                 $Catalog = Get-CSSISDBCatalog -IntegrationServices $IntegrationServices
             }
             "Catalog"{
-                Write-Verbose -Message "Already select Catalog"
+                Write-Verbose -Message "Object is Catalog"
                 $Catalog = $IntegrationServicesObject
             }
             default{
