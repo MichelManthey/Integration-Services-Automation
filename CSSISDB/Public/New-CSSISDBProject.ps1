@@ -29,13 +29,9 @@ function New-CSSISDBProject
 
 
     )
-    Begin{
-        #$Config = ([xml](Get-Content -Path "$PSScriptRoot\CSSISDB.config.xml" -ErrorAction Stop)).Config
-    }
+    Begin{}
 
     Process{
-        Write-Verbose $IspacSourcePath
-        Write-Verbose $Projectname
         [byte[]] $IspacSource = [System.IO.File]::ReadAllBytes($IspacSourcePath)
         if($Folder.Projects[$Projectname]){
             Write-Verbose "Project $($Projectname) exist and will be overriden"
