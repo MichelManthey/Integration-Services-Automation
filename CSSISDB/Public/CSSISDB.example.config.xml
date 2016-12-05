@@ -1,0 +1,22 @@
+﻿<?xml version = "1.0" encoding="utf-8"?>
+<Config>
+	<General
+		PartialName = "Microsoft.SqlServer.Management.IntegrationServices"
+		SqlConnectionString = "Data Source=.;Initial Catalog=master;Integrated Security=SSPI;"
+	/>
+	<SSISDB Name="SSISDB" Password="SuperPassword1+">
+		<Folders>
+			<Folder Name = "First" Description = "I am the first object i have created with Powershell">
+                <Projects>
+                    <Project Name = "Projekt1" Path = "M:\Projekte\Projekt1.ispac"/>
+                    <Project Name = "Projekt2" Path = "M:\Projekte\Projekt2.ispac"/>
+                </Projects>
+            </Folder>
+			<Folder Name = "Second" Description = "Some Magic Words">
+				<Projects>
+                    <Project Name = "Projekt3" Path = "M:\Projekte\Projekt3.ispac"/>
+                </Projects>
+			</Folder>
+		</Folders>
+	</SSISDB>
+</Config>
