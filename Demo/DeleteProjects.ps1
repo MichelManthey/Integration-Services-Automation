@@ -1,5 +1,5 @@
 ﻿Import-Module 'M:\Projekte\CSSISDB\CSSISDB' -Verbose -Force
-$Config = ([xml](Get-Content -Path "M:\Projekte\CSSISDB\CSSISDB\Public\CSSISDB.config.xml" -ErrorAction Stop)).Config  
+$Config = ([xml](Get-Content -Path "M:\Projekte\CSSISDB\CSSISDB\CSSISDB.config.xml" -ErrorAction Stop)).Config  
 
 
 [System.Reflection.Assembly]::LoadWithPartialName($Config.General.PartialName) | Out-Null;

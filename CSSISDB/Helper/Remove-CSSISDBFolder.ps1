@@ -27,6 +27,11 @@ function Remove-CSSISDBFolder
     Process{
 
         If($Folder){
+
+            Foreach($EnviromentName in $Folder.Environments.name){
+                Remove-CSSISDBEnviroment -Folder $Folder -EnviromentName $EnviromentName
+            }
+
             Foreach($ProjectName in $Folder.Projects.name){
                 Remove-CSSISDBProject -Folder $Folder -Projectname $ProjectName
             } 

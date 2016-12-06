@@ -10,7 +10,7 @@ TBD
 Version 0.01
 Author Dennis Bretz
 #>
-function Remove-CSSISDBProject
+function Remove-CSSISDBEnviroment
 {
     [cmdletBinding()]
     param
@@ -21,19 +21,19 @@ function Remove-CSSISDBProject
 
         # TBD
         [Parameter(Mandatory=$TRUE)]
-        [string]$ProjectName
+        [string]$EnviromentName
 
 
     )
     Begin{}
 
     Process{
-        $Project = $Folder.Projects[$ProjectName]
+        $Enviroment = $Folder.Environments[$EnviromentName]
         if($Project){
-            Write-Verbose -Message "Project $($Project.Name) will be removed"
-            $Project.Drop()
+            Write-Verbose -Message "Enviroment $($Enviroment.Name) will be removed"
+            $Enviroment.Drop()
         }else{
-            Write-Verbose -Message "Project does not exist"
+            Write-Verbose -Message "Enviroment $($Enviroment.Name) does not exist"
         }
     }
 
