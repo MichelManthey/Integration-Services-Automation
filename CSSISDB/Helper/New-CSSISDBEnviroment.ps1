@@ -25,15 +25,19 @@ function New-CSSISDBEnviroment
         
         # TBD
         [Parameter(Mandatory=$FALSE)]
-        [string]$EnvironmentDescription = ''
+        [string]$EnvironmentDescription = '',
+
+        # TBD
+        [Parameter(Mandatory=$FALSE)]
+        [string]$PartialName = 'Microsoft.SqlServer.Management.IntegrationServices.EnvironmentInfo'
+
+
     )
-    Begin{
-        $Config = ([xml](Get-Content -Path "$PSScriptRoot\CSSISDB.config.xml" -ErrorAction Stop)).Config
-    }
+    Begin{}
 
     Process{
         Write-Verbose "Creating environment ..."
-        $Environment = New-Object "$($Config.General.PartialName).EnvironmentInfo" ($Folder, $EnviromentName, $EnvironmentDescription)
+        $Environment = New-Object $PartialName ($Folder, $EnviromentName, $EnvironmentDescription)
         $Environment.Create()
         
         return($Environment)

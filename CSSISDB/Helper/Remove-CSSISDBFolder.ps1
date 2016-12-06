@@ -22,9 +22,7 @@ function Remove-CSSISDBFolder
 		[Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance]$Folder
     )
 
-    Begin{
-        $Config = ([xml](Get-Content -Path "$PSScriptRoot\CSSISDB.config.xml" -ErrorAction Stop)).Config
-    }
+    Begin{}
 
     Process{
 

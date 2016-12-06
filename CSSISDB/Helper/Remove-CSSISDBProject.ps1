@@ -25,9 +25,7 @@ function Remove-CSSISDBProject
 
 
     )
-    Begin{
-        #$Config = ([xml](Get-Content -Path "$PSScriptRoot\CSSISDB.config.xml" -ErrorAction Stop)).Config
-    }
+    Begin{}
 
     Process{
         $Project = $Folder.Projects[$Projectname]

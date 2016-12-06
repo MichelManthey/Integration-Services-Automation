@@ -24,16 +24,14 @@ function Get-CSSISDBFolder
 		[string]$FolderName
     )
 
-    Begin{
-        $Config = ([xml](Get-Content -Path "$PSScriptRoot\CSSISDB.config.xml" -ErrorAction Stop)).Config
-    }
+    Begin{}
 
     Process{
 
         switch ($IntegrationServicesObject.GetType().Name){
             "IntegrationServices"{
                 Write-Verbose -Message "Select by Integration Service"
-                $Catalog = Get-CSSISDBCatalog -IntegrationServices $IntegrationServices
+                $Catalog = Get-CSSISDBCatalog -IntegrationServices $IntegrationServicesObject
             }
             "Catalog"{
                 Write-Verbose -Message "Object is Catalog"
