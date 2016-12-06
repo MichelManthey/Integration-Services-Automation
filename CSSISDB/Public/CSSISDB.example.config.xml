@@ -18,5 +18,53 @@
                 </Projects>
 			</Folder>
 		</Folders>
+		<Enviroments>
+			<Enviroment Name = "DEV" Description = "">
+				<Variables>
+					<Variable Name = "EnvServerName" Type = "String" DefaultValue = "." Sensitivity = "false" Description = " "/>
+					<Variable Name = "EnvInitialCatalog_Staging" Type = "String" DefaultValue = "DB_Staging" Sensitivity = "false" Description = " "/>
+					<Variable Name = "EnvInitialCatalog_Source" Type = "String" DefaultValue = "DB" Sensitivity = "false" Description = " "/>
+					<Variable Name = "EnvInitialCatalog_DWH" Type = "String" DefaultValue = "DB_DWH" Sensitivity = "false" Description = " "/>
+				</Variables>				
+			</Enviroment>
+			<Enviroment Name = "Prod" Description = "">
+				<Variables>
+					<Variable Name = "EnvServerName" Type = "String" DefaultValue = "LiveServer" Sensitivity = "false" Description = " "/>
+					<Variable Name = "EnvInitialCatalog_Staging" Type = "String" DefaultValue = "DB123_Staging" Sensitivity = "false" Description = " "/>
+					<Variable Name = "EnvInitialCatalog_Source" Type = "String" DefaultValue = "DB123" Sensitivity = "false" Description = " "/>
+					<Variable Name = "EnvInitialCatalog_DWH" Type = "String" DefaultValue = "DB123_DWH" Sensitivity = "false" Description = " "/>
+				</Variables>				
+			</Enviroment>
+		</Enviroments>
+		<References>
+			<Reference Folder ="First" Project = "Projekt1" Enviroment = "DEV">
+				<Variables>
+					<Variable ProjectParam = "Str_InitialCatalog_Source" VariableName = "EnvInitialCatalog_Source"/>
+					<Variable ProjectParam = "Str_InitialCatalog_Staging" VariableName = "EnvInitialCatalog_Staging"/>
+					<Variable ProjectParam = "Str_ServerName" VariableName = "EnvServerName"/>
+				</Variables>
+			</Reference>
+			<Reference Folder ="First" Project = "Projekt2" Enviroment = "DEV">
+				<Variables>
+					<Variable ProjectParam = "Str_InitialCatalog_DWH" VariableName = "EnvInitialCatalog_DWH"/>
+					<Variable ProjectParam = "Str_InitialCatalog_Staging" VariableName = "EnvInitialCatalog_Staging"/>
+					<Variable ProjectParam = "Str_ServerName" VariableName = "EnvServerName"/>
+				</Variables>
+			</Reference>
+			<Reference Folder ="First" Project = "Projekt1" Enviroment = "Prod">
+				<Variables>
+					<Variable ProjectParam = "Str_InitialCatalog_Source" VariableName = "EnvInitialCatalog_Source"/>
+					<Variable ProjectParam = "Str_InitialCatalog_Staging" VariableName = "EnvInitialCatalog_Staging"/>
+					<Variable ProjectParam = "Str_ServerName" VariableName = "EnvServerName"/>
+				</Variables>
+			</Reference>
+			<Reference Folder ="First" Project = "Projekt2" Enviroment = "Prod">
+				<Variables>
+					<Variable ProjectParam = "Str_InitialCatalog_DWH" VariableName = "EnvInitialCatalog_DWH"/>
+					<Variable ProjectParam = "Str_InitialCatalog_Staging" VariableName = "EnvInitialCatalog_Staging"/>
+					<Variable ProjectParam = "Str_ServerName" VariableName = "EnvServerName"/>
+				</Variables>
+			</Reference>
+		</References>
 	</SSISDB>
 </Config>

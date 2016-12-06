@@ -7,7 +7,7 @@ $SqlConnection = New-Object System.Data.SqlClient.SqlConnection $Config.General.
 $IntegrationServices = New-Object "$($Config.General.PartialName).IntegrationServices" $SqlConnection
 
 $ConfigFolder = $Config.SSISDB.Folders.Folder[0]
-#Foreach($ConfigFolder in $Config.SSISDB.Folders.Folder){
+Foreach($ConfigFolder in $Config.SSISDB.Folders.Folder){
     $Folder = Get-CSSISDBFolder  -IntegrationServicesObject $IntegrationServices -FolderName $ConfigFolder.Name -Verbose
     If(!$Folder){
         Write-Warning "$($ConfigFolder.Name) does not exist"
@@ -27,7 +27,24 @@ $ConfigFolder = $Config.SSISDB.Folders.Folder[0]
                 $Variable = New-CSSISDBEnviromentVariable -Enviroment $Enviroment -VariableName $VariableConfig.Name -VariableType $VariableConfig.Type -VariableDefaultValue $VariableConfig.DefaultValue -VariableSensitivity $VariableConfig.Sensitivity -VariableDescription $VariableConfig.Description -Verbose -Override
             }
         }
-        $Enviroment.Alter()
-            
+        $Enviroment.Alter()      
     }
-#}
+
+     
+    Foreach ($ReferencConfig in $Config.SSISDB.References.Reference | Where-Object 'Folder' -Like $Folder.Name){
+       $Folder = Get-CSSISDBFolder -FolderName $ReferencConfig.Folder -IntegrationServicesObject $IntegrationServices
+       $EnvironmentReference = Get-CSSISDBProjectReference -Folder $Folder -EnviromentName $ReferencConfig.Enviroment -ProjectName $ReferencConfig.Project
+       
+       if(!$EnvironmentReference){
+           New-CSSISDBProjectReference -Folder $Folder -EnviromentName $ReferencConfig.Enviroment -ProjectName $ReferencConfig.Project
+       }
+       
+       $Project = Get-CSSISDBProject -Folder $Folder -ProjectName $ReferencConfig.Project
+       Foreach($VariableProjectConfig in $ReferencConfig.Variables.Variable){
+          Set-CSSISDBVariable -Project $Project -ProjectParamName $VariableProjectConfig.ProjectParam -VariableName $VariableProjectConfig.VariableName -Verbose
+       }
+       $Project.Alter()
+       $EnvironmentReference = $Project.References.Item($ReferencConfig.Enviroment, $Folder.Name)
+       $EnvironmentReference.Refresh()
+     }
+}

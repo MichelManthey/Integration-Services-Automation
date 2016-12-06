@@ -33,6 +33,7 @@ function New-CSSISDBEnviromentVariable
 
         # TBD
         [Parameter(Mandatory=$TRUE)]
+        [ValidateSet("true","false")] 
         [String]$VariableSensitivity,
 
         # TBD
@@ -47,6 +48,12 @@ function New-CSSISDBEnviromentVariable
     Begin{}
 
     Process{
+        
+        if($VariableSensitivity -like "true"){
+            [bool]$VariableSensitivity = $TRUE
+        }else{
+            [bool]$VariableSensitivity = $false
+        }
         if($Enviroment.Variables[$VariableName]){
             if($Override){
                 Write-Verbose "$($VariableName) is existing and will be overriden"
