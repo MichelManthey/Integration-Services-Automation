@@ -5,12 +5,8 @@ TBD
 
 .DESCRIPTION
 TBD
-
-.NOTES
-Version 0.01
-Author Dennis Bretz
 #>
-function New-CSSISDBCatalog
+function New-CIsaCatalog
 {
     [cmdletBinding()]
     param

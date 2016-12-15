@@ -7,10 +7,8 @@ TBD
 TBD
 
 .NOTES
-Version 0.01
-Author Dennis Bretz
 #>
-function New-CSSISDBProject
+function New-CIsaProject
 {
     [cmdletBinding()]
     param

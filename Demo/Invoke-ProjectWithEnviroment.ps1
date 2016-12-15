@@ -1,5 +1,5 @@
-﻿Import-Module 'M:\Projekte\CSSISDB\CSSISDB' -Verbose -Force
-$Config = ([xml](Get-Content -Path "M:\Projekte\CSSISDB\CSSISDB\CSSISDB.config.xml" -ErrorAction Stop)).Config  
+﻿Import-Module 'M:\Projekte\CIsa\CIsa' -Verbose -Force
+$Config = ([xml](Get-Content -Path "M:\Projekte\CIsa\CIsa\CIsa.config.xml" -ErrorAction Stop)).Config  
 
 
 
@@ -14,12 +14,12 @@ $ConfigProjects = $ConfigFolder.Projects.Project
 
 
 Write-Host "Invoke Folder $($ConfigFolder.Name)"
-$Folder = Invoke-CSSISDBFolder -FolderName $ConfigFolder.Name -Verbose -IntegrationServicesObject $IntegrationServicesObject
+$Folder = Invoke-CIsaFolder -FolderName $ConfigFolder.Name -Verbose -IntegrationServicesObject $IntegrationServicesObject
 
 
 
 
 Foreach($ConfigProject in $ConfigProjects){
     Write-Host "$($ConfigProject.Name) in $($Folder.Name) will get an Enviroment $($ConfigEnviroment.Name)"
-    Invoke-CSSISDBEnviromentProjectVariable -IntegrationServices $IntegrationServicesObject -FolderName $Folder.Name -EnviromentName $ConfigEnviroment.Name -ProjectName $ConfigProject.Name -Verbose
+    Invoke-CIsaEnviromentProjectVariable -IntegrationServices $IntegrationServicesObject -FolderName $Folder.Name -EnviromentName $ConfigEnviroment.Name -ProjectName $ConfigProject.Name -Verbose
 }

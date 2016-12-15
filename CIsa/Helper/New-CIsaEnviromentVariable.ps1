@@ -7,10 +7,8 @@ TBD
 TBD
 
 .NOTES
-Version 0.01
-Author Dennis Bretz
 #>
-function New-CSSISDBEnviromentVariable
+function New-CIsaEnviromentVariable
 {
     [cmdletBinding()]
     param

@@ -7,10 +7,8 @@ TBD
 TBD
 
 .NOTES
-Version 0.01
-Author Dennis Bretz
 #>
-function Get-CSSISDBProject
+function Get-CIsaProjectReference
 {
     [cmdletBinding()]
     param
@@ -18,6 +16,10 @@ function Get-CSSISDBProject
     	# TBD
 		[Parameter(Mandatory=$TRUE)]
 		[Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance]$Folder,
+
+    	# TBD
+		[Parameter(Mandatory=$TRUE)]
+		[string]$EnviromentName,
 
         # TBD
 		[Parameter(Mandatory=$TRUE)]
@@ -27,9 +29,11 @@ function Get-CSSISDBProject
     Begin{}
 
     Process{
-        Write-Verbose -Message "Select Project Reference"
-        $Project = $Folder.Projects[$ProjectName]
-        Return($Project)
+
+        $Project = $Folder.Projects[$ProjectName] 
+        $EnvironmentReference = $Project.References.Item($EnviromentName, $Folder.Name)   
+
+        Return $EnvironmentReference
     }
 
     End{}

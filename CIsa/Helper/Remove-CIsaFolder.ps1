@@ -10,9 +10,8 @@ TBD
 Version 0.01
 Author Dennis Bretz
 TBD SfcInstance switch Folder, Catalog
-TBD Drop Project Params first...
 #>
-function Remove-CSSISDBFolder
+function Remove-CIsaFolder
 {
     [cmdletBinding()]
     param

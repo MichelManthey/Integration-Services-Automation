@@ -5,12 +5,8 @@ TBD
 
 .DESCRIPTION
 TBD
-
-.NOTES
-Version 0.01
-Author Dennis Bretz
 #>
-function Get-CSSISDBEnviroment
+function Get-CIsaEnviroment
 {
     [cmdletBinding()]
     param
