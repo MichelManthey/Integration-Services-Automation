@@ -1,48 +1,66 @@
 ﻿<#
 
 .SYNOPSIS
-TBD
+Get folder objects from a SSISDB.
 
 .DESCRIPTION
-TBD
+Returns folder as  Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance objects from a given IntegrationServices Object. The IntegrationServicesObject can be an integration services or a catalog.
+If the function is called without a folder name, then all folders will be returned.
+
+.EXAMPLE
+Get-CIsaFolder -IntegrationServicesObject $IntegrationServices
+Get-CIsaFolder -IntegrationServicesObject $IntegrationServices -FolderName "TestFolder"
+
 #>
 function Get-CIsaFolder
 {
     [cmdletBinding()]
     param
     (
-    	# TBD
+    	# Can be an integration services or a catalog object
 		[Parameter(Mandatory=$TRUE)]
 		[Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance]$IntegrationServicesObject,
 
-    	# TBD
-		[Parameter(Mandatory=$TRUE)]
+    	# Name of the folder
+		[Parameter(Mandatory=$FALSE)]
 		[string]$FolderName
     )
 
-    Begin{}
+    Begin{
+        $StartTime = Get-Date -UFormat "%T"
+        Write-Verbose -Message "$($StartTime) - Start Function $($MyInvocation.MyCommand)"
+    }
 
     Process{
-
         switch ($IntegrationServicesObject.GetType().Name){
             "IntegrationServices"{
-                Write-Verbose -Message "Select by Integration Service"
-                $Catalog = Get-CSSISDBCatalog -IntegrationServices $IntegrationServicesObject
+                Write-Verbose -Message "Select by integration services"
+                $Catalog = Get-CIsaCatalog -IntegrationServices $IntegrationServicesObject
             }
             "Catalog"{
-                Write-Verbose -Message "Object is Catalog"
+                Write-Verbose -Message "Select by catalog"
                 $Catalog = $IntegrationServicesObject
             }
             default{
-                Write-Warning -Message "TBD SELECT By Config String"
+                Write-Warning -Message "TBD"
             }
         }
 
+        If($FolderName){
+            Write-Verbose -Message "Returns one Folder"
+            $Folders = $Catalog.Folders[$FolderName]
+        }else{
+            $Folders = $Catalog.Folders
+        }
 
-        Return $Catalog.Folders[$FolderName]
+        Return $Folders
     }
 
-    End{}
+    End{
+        $EndTime = Get-Date -UFormat "%T"
+        $Timespan = NEW-TIMESPAN -Start $StartTime -End $EndTime
+        Write-Verbose -Message "Finished $($EndTime) with $($Timespan.TotalSeconds) seconds"
+    }
 
 
 }

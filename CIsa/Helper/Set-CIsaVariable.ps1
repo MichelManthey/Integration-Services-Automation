@@ -29,7 +29,7 @@ function Set-CIsaVariable
     Begin{}
 
     Process{
-        Write-Verbose "Set Enviroment Params"
+        Write-Verbose "Set Environment Params"
         $Project.Parameters[$ProjectParamName].Set([Microsoft.SqlServer.Management.IntegrationServices.ParameterInfo+ParameterValueType]::Referenced,$VariableName)            
     }
 

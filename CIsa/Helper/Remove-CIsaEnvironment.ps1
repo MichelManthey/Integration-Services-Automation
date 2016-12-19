@@ -1,19 +1,16 @@
 ﻿<#
 
 .SYNOPSIS
-Removes a project from a folder.
+Removes a Environment from a folder.
 
 .DESCRIPTION
-Removes a project from a folder.
-
-.NOTES
-TBD Removes Enironments first
+Removes a Environment from a folder.
 
 .EXAMPLE
-Remove-CIsaProject -Folder (Get-CIsaFolder -IntegrationServicesObject $IntegrationServices -FolderName "FolderName") -ProjectName "test"
+Remove-CIsaEnvironment -Folder (Get-CIsaFolder -IntegrationServicesObject $IntegrationServices -FolderName "FolderName") -EnvironmentName "DEV"
 
 #>
-function Remove-CIsaProject
+function Remove-CIsaEnvironment
 {
     [cmdletBinding()]
     param
@@ -22,9 +19,9 @@ function Remove-CIsaProject
 		[Parameter(Mandatory=$TRUE)]
 		[Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance]$Folder,
 
-        # Name of the project, wich should be removed
+        # Name of the Environment, wich will be removed.
         [Parameter(Mandatory=$TRUE)]
-        [string]$ProjectName
+        [string]$EnvironmentName
 
 
     )
@@ -34,12 +31,12 @@ function Remove-CIsaProject
     }
 
     Process{
-        $Project = $Folder.Projects[$ProjectName]
+        $Environment = $Folder.Environments[$EnvironmentName]
         if($Project){
-            Write-Verbose -Message "Project $($Project.Name) will be removed"
-            $Project.Drop()
+            Write-Verbose -Message "Environment $($Environment.Name) will be removed"
+            $Environment.Drop()
         }else{
-            Write-Verbose -Message "Project does not exist"
+            Write-Verbose -Message "Environment $($Environment.Name) does not exist"
         }
     }
 

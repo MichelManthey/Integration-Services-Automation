@@ -1,45 +1,49 @@
 ﻿<#
 
 .SYNOPSIS
-TBD
+Creates a new SSISDB catalog.
 
 .DESCRIPTION
-TBD
+Creates a SSISDB as an Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance object for a given integration services object. 
+
+.EXAMPLE
+New-CIsaCatalog -IntegrationServices $IntegrationServices -SSISDBPassword "SuperStrong"
+
 #>
 function New-CIsaCatalog
 {
     [cmdletBinding()]
     param
     (
-    	# TBD
+    	# Microsoft.SqlServer.Management.IntegrationServices.IntegrationServices object with a System.Data.SqlClient.SqlConnection object.
 		[Parameter(Mandatory=$TRUE)]
 		[Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance]$IntegrationServices,
 
-        # TBD
-		[Parameter(Mandatory=$FALSE)]
-		[string]$SSISDBName = 'SSISDB',
-
-        # TBD
+        # Password for the SSISDB catalog
 		[Parameter(Mandatory=$TRUE)]
 		[string]$SSISDBPassword,
-		
-        # TBD
-        [Parameter(Mandatory=$FALSE)]
-        [string]$PartialName = 'Microsoft.SqlServer.Management.IntegrationServices.Catalog'
 
+        # Name for the SSISDB catalog
+		[Parameter(Mandatory=$FALSE)]
+		[string]$SSISDBName = 'SSISDB'
 
     )
-    Begin{}
+    Begin{
+        $StartTime = Get-Date -UFormat "%T"
+        Write-Verbose -Message "$($StartTime) - Start Function $($MyInvocation.MyCommand)"
+    }
 
     Process{
-        Write-Verbose -Message "Creating SSIS Catalog"
-        $Catalog = New-Object $PartialName ($IntegrationServices, $SSISDBName, $SSISDBPassword)
+        $Catalog = New-Object 'Microsoft.SqlServer.Management.IntegrationServices.Catalog' ($IntegrationServices, $SSISDBName, $SSISDBPassword)
         $Catalog.Create()
-		Write-Verbose -Message "Catalog was created"
 		return($Catalog)
     }
 
-    End{}
+    End{
+        $EndTime = Get-Date -UFormat "%T"
+        $Timespan = NEW-TIMESPAN -Start $StartTime -End $EndTime
+        Write-Verbose -Message "Finished $($EndTime) with $($Timespan.TotalSeconds) seconds"
+    }
 
 
 }

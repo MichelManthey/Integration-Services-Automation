@@ -27,12 +27,12 @@ function Remove-CIsaFolder
 
         If($Folder){
 
-            Foreach($EnviromentName in $Folder.Environments.name){
-                Remove-CSSISDBEnviroment -Folder $Folder -EnviromentName $EnviromentName
+            Foreach($EnvironmentName in $Folder.Environments.name){
+                Remove-CIsaEnvironment -Folder $Folder -EnvironmentName $EnvironmentName
             }
 
             Foreach($ProjectName in $Folder.Projects.name){
-                Remove-CSSISDBProject -Folder $Folder -Projectname $ProjectName
+                Remove-CIsaProject -Folder $Folder -Projectname $ProjectName
             } 
 
             Write-Verbose -Message "Folder $($Folder.Name) will be removed"

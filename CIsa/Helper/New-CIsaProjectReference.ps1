@@ -19,7 +19,7 @@ function New-CIsaProjectReference
 
     	# TBD
 		[Parameter(Mandatory=$TRUE)]
-		[string]$EnviromentName,
+		[string]$EnvironmentName,
 
         # TBD
 		[Parameter(Mandatory=$TRUE)]
@@ -31,7 +31,7 @@ function New-CIsaProjectReference
     Process{
         Write-Verbose -Message "Set Project Reference"
         $Project = $Folder.Projects[$ProjectName] 
-        $Project.References.Add($EnviromentName, $Folder.Name)
+        $Project.References.Add($EnvironmentName, $Folder.Name)
         $Project.Alter()
     }
 

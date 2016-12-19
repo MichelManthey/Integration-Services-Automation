@@ -6,14 +6,14 @@ TBD
 .DESCRIPTION
 TBD
 #>
-function Get-CIsaEnviromentVariable
+function Get-CIsaEnvironmentVariable
 {
     [cmdletBinding()]
     param
     (
     	# TBD
 		[Parameter(Mandatory=$TRUE)]
-		[Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance]$Enviroment,
+		[Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance]$Environment,
 
         # TBD
         [Parameter(Mandatory=$TRUE)]
@@ -22,9 +22,9 @@ function Get-CIsaEnviromentVariable
     Begin{}
 
     Process{
-        Write-Verbose -Message "Select Enviroment Variable"
+        Write-Verbose -Message "Select Environment Variable"
         if(!$Environment.Variables){
-            Write-Verbose -Message "Enviroment Variable $($VariableName) does not exist"
+            Write-Verbose -Message "Environment Variable $($VariableName) does not exist"
             $VariableName = $null
         }else{
             $VariableName = $Environment.Variables[$VariableName]

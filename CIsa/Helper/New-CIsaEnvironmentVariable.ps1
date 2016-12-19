@@ -8,14 +8,14 @@ TBD
 
 .NOTES
 #>
-function New-CIsaEnviromentVariable
+function New-CIsaEnvironmentVariable
 {
     [cmdletBinding()]
     param
     (
     	# TBD
 		[Parameter(Mandatory=$TRUE)]
-		[Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance]$Enviroment,
+		[Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance]$Environment,
 
         # TBD
         [Parameter(Mandatory=$TRUE)]
@@ -52,21 +52,21 @@ function New-CIsaEnviromentVariable
         }else{
             [bool]$VariableSensitivity = $false
         }
-        if($Enviroment.Variables[$VariableName]){
+        if($Environment.Variables[$VariableName]){
             if($Override){
                 Write-Verbose "$($VariableName) is existing and will be overriden"
-                $Enviroment.Variables.Remove($VariableName)
-                $Enviroment.Alter()
-                $Enviroment.Variables.Add($VariableName,[System.TypeCode]::$VariableType,$VariableDefaultValue,$VariableSensitivity,$VariableDescription)
+                $Environment.Variables.Remove($VariableName)
+                $Environment.Alter()
+                $Environment.Variables.Add($VariableName,[System.TypeCode]::$VariableType,$VariableDefaultValue,$VariableSensitivity,$VariableDescription)
             }else{
                 Write-Verbose "$($VariableName) is existing"
             }
 
         }else{
-            Write-Verbose -Message "Add Enviroment Variable $($VariableName) to Enviroment $($Enviroment.Name)"
-            $Enviroment.Variables.Add($VariableName,[System.TypeCode]::$VariableType,$VariableDefaultValue,$VariableSensitivity,$VariableDescription)
+            Write-Verbose -Message "Add Environment Variable $($VariableName) to Environment $($Environment.Name)"
+            $Environment.Variables.Add($VariableName,[System.TypeCode]::$VariableType,$VariableDefaultValue,$VariableSensitivity,$VariableDescription)
         }
-        return($Enviroment)
+        return($Environment)
     }
 
     End{}

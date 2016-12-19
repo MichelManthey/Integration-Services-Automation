@@ -1,14 +1,16 @@
 ﻿<#
 
 .SYNOPSIS
-TBD
+Adds an Environment to an existing folder.
 
 .DESCRIPTION
-TBD
+Adds an Environment to an existing folder.
 
-.NOTES
+.EXAMPLE
+New-CIsaEnvironment -Folder (Get-CIsaFolder -IntegrationServicesObject $IntegrationServices -FolderName "FolderName") -EnvironmentName "DEV"
+
 #>
-function New-CIsaEnviroment
+function New-CIsaEnvironment
 {
     [cmdletBinding()]
     param
@@ -19,30 +21,32 @@ function New-CIsaEnviroment
 
         # TBD
         [Parameter(Mandatory=$TRUE)]
-        [string]$EnviromentName,
+        [string]$EnvironmentName,
         
         # TBD
         [Parameter(Mandatory=$FALSE)]
-        [string]$EnvironmentDescription = '',
-
-        # TBD
-        [Parameter(Mandatory=$FALSE)]
-        [string]$PartialName = 'Microsoft.SqlServer.Management.IntegrationServices.EnvironmentInfo'
-
+        [string]$EnvironmentDescription = ''
 
     )
-    Begin{}
+    Begin{
+        $StartTime = Get-Date -UFormat "%T"
+        Write-Verbose -Message "$($StartTime) - Start Function $($MyInvocation.MyCommand)"
+    }
 
     Process{
-        Write-Verbose "Creating environment ..."
-        $Environment = New-Object $PartialName ($Folder, $EnviromentName, $EnvironmentDescription)
+        Write-Verbose "Creating environment"
+        $Environment = New-Object 'Microsoft.SqlServer.Management.IntegrationServices.EnvironmentInfo' ($Folder, $EnvironmentName, $EnvironmentDescription)
         $Environment.Create()
         
         return($Environment)
         
     }
 
-    End{}
+    End{
+        $EndTime = Get-Date -UFormat "%T"
+        $Timespan = NEW-TIMESPAN -Start $StartTime -End $EndTime
+        Write-Verbose -Message "Finished $($EndTime) with $($Timespan.TotalSeconds) seconds"
+    }
 
 
 }

@@ -19,7 +19,7 @@ function Get-CIsaProjectReference
 
     	# TBD
 		[Parameter(Mandatory=$TRUE)]
-		[string]$EnviromentName,
+		[string]$EnvironmentName,
 
         # TBD
 		[Parameter(Mandatory=$TRUE)]
@@ -31,7 +31,7 @@ function Get-CIsaProjectReference
     Process{
 
         $Project = $Folder.Projects[$ProjectName] 
-        $EnvironmentReference = $Project.References.Item($EnviromentName, $Folder.Name)   
+        $EnvironmentReference = $Project.References.Item($EnvironmentName, $Folder.Name)   
 
         Return $EnvironmentReference
     }
