@@ -1,0 +1,16 @@
+﻿<?xml version = "1.0" encoding="utf-8"?>
+<Config>
+	<General
+		PartialName = "Microsoft.SqlServer.Management.IntegrationServices"
+		SqlConnectionString = "Data Source=.;Initial Catalog=master;Integrated Security=SSPI;"
+	/>
+	<SSISDB Name="SSISDB" Password="SuperPassword1+">
+		<Folders>
+			<Folder Name = "Microsoft_sql-server-samples" Description = "WideWorldImporters Sample Database for SQL Server and Azure SQL Database from https://github.com/Microsoft/sql-server-samples/tree/master/samples/databases/wide-world-importers#wideworldimporters-sample-database-for-sql-server-and-azure-sql-database">
+                <Projects>
+                    <Project Name = "Daily ETL" Path = "...\Cisa\Demo\Daily_ETL.ispac"/>
+                </Projects>
+            </Folder>
+		</Folders>
+	</SSISDB>
+</Config>

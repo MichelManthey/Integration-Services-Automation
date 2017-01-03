@@ -47,7 +47,7 @@ function Get-CIsaFolder
         }
 
         If($FolderName){
-            Write-Verbose -Message "Returns one Folder"
+            Write-Verbose -Message "Selecting one folder"
             $Folders = $Catalog.Folders[$FolderName]
         }else{
             $Folders = $Catalog.Folders
