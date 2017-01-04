@@ -1,68 +1,46 @@
-﻿<?xml version = "1.0" encoding="utf-8"?>
+<?xml version = "1.0" encoding="utf-8"?>
 <Config>
 	<General
-		PartialName = "Microsoft.SqlServer.Management.IntegrationServices"
 		SqlConnectionString = "Data Source=.;Initial Catalog=master;Integrated Security=SSPI;"
 	/>
 	<SSISDB Name="SSISDB" Password="SuperPassword1+">
 		<Folders>
-			<Folder Name = "First" Description = "I am the first object i have created with Powershell">
+			<Folder Name = "Microsoft_sql-server-samples" Description = "WideWorldImporters Sample Database for SQL Server and Azure SQL Database from https://github.com/Microsoft/sql-server-samples/tree/master/samples/databases/wide-world-importers#wideworldimporters-sample-database-for-sql-server-and-azure-sql-database">
                 <Projects>
-                    <Project Name = "Projekt1" Path = "M:\Projekte\Projekt1.ispac"/>
-                    <Project Name = "Projekt2" Path = "M:\Projekte\Projekt2.ispac"/>
+                    <Project Name = "Daily ETL" Path = "D:\Cisa\Demo\Daily_ETL.ispac">
+						<References>
+							<Reference RefId = "1" EnvId = "1"/>
+							<Reference RefId = "2" EnvId = "2"/>
+						</References>
+					</Project>
                 </Projects>
             </Folder>
-			<Folder Name = "Second" Description = "Some Magic Words">
-				<Projects>
-                    <Project Name = "Projekt3" Path = "M:\Projekte\Projekt3.ispac"/>
-                </Projects>
-			</Folder>
 		</Folders>
-		<Enviroments>
-			<Enviroment Name = "DEV" Description = "">
+		<Environments>
+			<Environment EnvId = "1" Name = "Dev" Description = "Simulation of a different environment with same variables">
 				<Variables>
-					<Variable Name = "EnvServerName" Type = "String" DefaultValue = "." Sensitivity = "false" Description = " "/>
-					<Variable Name = "EnvInitialCatalog_Staging" Type = "String" DefaultValue = "DB_Staging" Sensitivity = "false" Description = " "/>
-					<Variable Name = "EnvInitialCatalog_Source" Type = "String" DefaultValue = "DB" Sensitivity = "false" Description = " "/>
-					<Variable Name = "EnvInitialCatalog_DWH" Type = "String" DefaultValue = "DB_DWH" Sensitivity = "false" Description = " "/>
+					<Variable Name = "EnvInitialCatalog_Source" Type = "String" DefaultValue = "WideWorldImporters" Sensitivity = "false" Description = " "/>
+					<Variable Name = "EnvInitialCatalog_DW" Type = "String" DefaultValue = "WideWorldImportersDW" Sensitivity = "false" Description = " "/>
 				</Variables>				
-			</Enviroment>
-			<Enviroment Name = "Prod" Description = "">
+			</Environment>
+			<Environment EnvId = "2" Name = "Prod" Description = "Simulation of another environment with different variables">
 				<Variables>
-					<Variable Name = "EnvServerName" Type = "String" DefaultValue = "LiveServer" Sensitivity = "false" Description = " "/>
-					<Variable Name = "EnvInitialCatalog_Staging" Type = "String" DefaultValue = "DB123_Staging" Sensitivity = "false" Description = " "/>
-					<Variable Name = "EnvInitialCatalog_Source" Type = "String" DefaultValue = "DB123" Sensitivity = "false" Description = " "/>
-					<Variable Name = "EnvInitialCatalog_DWH" Type = "String" DefaultValue = "DB123_DWH" Sensitivity = "false" Description = " "/>
+					<Variable Name = "EnvInitialCatalog_Source" Type = "String" DefaultValue = "WideWorldImporters" Sensitivity = "false" Description = " "/>
+					<Variable Name = "EnvInitialCatalog_DW" Type = "String" DefaultValue = "WideWorldImportersDW_2" Sensitivity = "false" Description = "Simulation of another database"/>
 				</Variables>				
-			</Enviroment>
-		</Enviroments>
+			</Environment>
+		</Environments>
 		<References>
-			<Reference Folder ="First" Project = "Projekt1" Enviroment = "DEV">
+			<Reference RefId = "1" Folder ="Microsoft_sql-server-samples" Project = "Daily ETL" Environment = "Dev">
 				<Variables>
-					<Variable ProjectParam = "Str_InitialCatalog_Source" VariableName = "EnvInitialCatalog_Source"/>
-					<Variable ProjectParam = "Str_InitialCatalog_Staging" VariableName = "EnvInitialCatalog_Staging"/>
-					<Variable ProjectParam = "Str_ServerName" VariableName = "EnvServerName"/>
+					<Variable ProjectParam = "CM.WWI_DW_Destination_DB.InitialCatalog" VariableName = "EnvInitialCatalog_DW"/>
+					<Variable ProjectParam = "CM.WWI_Source_DB.InitialCatalog" VariableName = "EnvInitialCatalog_Source"/>
 				</Variables>
 			</Reference>
-			<Reference Folder ="First" Project = "Projekt2" Enviroment = "DEV">
+			<Reference RefId = "2" Folder ="Microsoft_sql-server-samples" Project = "Daily ETL" Environment = "Prod">
 				<Variables>
-					<Variable ProjectParam = "Str_InitialCatalog_DWH" VariableName = "EnvInitialCatalog_DWH"/>
-					<Variable ProjectParam = "Str_InitialCatalog_Staging" VariableName = "EnvInitialCatalog_Staging"/>
-					<Variable ProjectParam = "Str_ServerName" VariableName = "EnvServerName"/>
-				</Variables>
-			</Reference>
-			<Reference Folder ="First" Project = "Projekt1" Enviroment = "Prod">
-				<Variables>
-					<Variable ProjectParam = "Str_InitialCatalog_Source" VariableName = "EnvInitialCatalog_Source"/>
-					<Variable ProjectParam = "Str_InitialCatalog_Staging" VariableName = "EnvInitialCatalog_Staging"/>
-					<Variable ProjectParam = "Str_ServerName" VariableName = "EnvServerName"/>
-				</Variables>
-			</Reference>
-			<Reference Folder ="First" Project = "Projekt2" Enviroment = "Prod">
-				<Variables>
-					<Variable ProjectParam = "Str_InitialCatalog_DWH" VariableName = "EnvInitialCatalog_DWH"/>
-					<Variable ProjectParam = "Str_InitialCatalog_Staging" VariableName = "EnvInitialCatalog_Staging"/>
-					<Variable ProjectParam = "Str_ServerName" VariableName = "EnvServerName"/>
+					<Variable ProjectParam = "CM.WWI_DW_Destination_DB.InitialCatalog" VariableName = "EnvInitialCatalog_DW"/>
+					<Variable ProjectParam = "CM.WWI_Source_DB.InitialCatalog" VariableName = "EnvInitialCatalog_Source"/>
 				</Variables>
 			</Reference>
 		</References>

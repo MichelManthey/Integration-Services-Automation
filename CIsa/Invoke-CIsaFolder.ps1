@@ -23,7 +23,7 @@ function Invoke-CIsaFolder
 		[Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance]$IntegrationServicesObject,
 
     	# Defines folder to be created, if not given all folders will be created
-		[Parameter(Mandatory=$FALSE)]
+		[Parameter(Mandatory=$TRUE)]
 		[string]$FolderName,
 
         # Path to Config
@@ -52,11 +52,10 @@ function Invoke-CIsaFolder
                 $Catalog = $IntegrationServicesObject
             }
             default{
-                Write-Warning -Message "TBD"
+                Write-Warning -Message "TBD" -ErrorAction Stop
             }
         }
         
-        If($FolderName){
             Write-Verbose -Message "Select project config by FolderName"
             $ConfigFolder =  $Config.SSISDB.Folders.Folder | Where-Object "Name" -Like $FolderName
             If(!$ConfigFolder){
@@ -68,22 +67,9 @@ function Invoke-CIsaFolder
                 $Folder = New-CIsaFolder -FolderName $ConfigFolder.Name -FolderDescription $ConfigFolder.Description -IntegrationServicesObject $IntegrationServicesObject
             }
             Foreach ($ConfigProject in $ConfigFolder.Projects.Project){
-                New-CIsaProject -Folder $Folder -IspacSourcePath $ConfigProject.Path -ProjectName $ConfigProject.Name -ErrorAction Stop
+                $Status = New-CIsaProject -Folder $Folder -IspacSourcePath $ConfigProject.Path -ProjectName $ConfigProject.Name -ErrorAction Stop
             }
             return ($Folder)
-        } else{
-            Write-Verbose -Message "Select all project configs"
-            Foreach ($ConfigFolder in $Config.SSISDB.Folders.Folder){
-                $Folder = Get-CIsaFolder -IntegrationServicesObject $IntegrationServicesObject -FolderName $FolderName
-                If(!$Folder){
-                    Write-Verbose "$($FolderName) does not exist and will be created"
-                    $Folder = New-CIsaFolder -FolderName $ConfigFolder.Name -FolderDescription $ConfigFolder.Description -IntegrationServicesObject $IntegrationServicesObject
-                }
-                Foreach ($ConfigProject in $ConfigFolder.Projects.Project){
-                    New-CIsaProject -Folder $Folder -IspacSourcePath $ConfigProject.Path -Projectname $ConfigProject.Name -ErrorAction Stop
-                }
-            } 
-        }
     }
 
     End{}

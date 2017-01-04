@@ -1,7 +1,7 @@
 ﻿$ModulePath = "D:\Users\DBR\Projects\Powershell\Cisa\CIsa"
 $Path = "$($ModulePath)\CIsa.config.simple.xml"
 
-Import-Module $ModulePath -Verbose -Force
+Import-Module $ModulePath -Force
 
 $Config = ([xml](Get-Content -Path $Path -ErrorAction Stop)).Config
 
@@ -11,7 +11,7 @@ $IntegrationServices = New-Object "Microsoft.SqlServer.Management.IntegrationSer
 
 
 # Create Project via Config
-Invoke-CIsaFolder -IntegrationServicesObject $IntegrationServices -FolderName "Microsoft_sql-server-samples" -PathToConfig $Path
+Invoke-CIsaFolder -IntegrationServicesObject $IntegrationServices -FolderName "Microsoft_sql-server-samples_DBR" -PathToConfig $Path
 
 # Invoke via helper functions
 $FolderName = "Microsoft_sql-server-samples_way2"
