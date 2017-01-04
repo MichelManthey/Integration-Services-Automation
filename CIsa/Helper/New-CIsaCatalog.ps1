@@ -4,7 +4,8 @@
 Creates a new SSISDB catalog.
 
 .DESCRIPTION
-Creates a SSISDB as an Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance object for a given integration services object. 
+Creates a SSISDB as an Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance object for a given integration services object.
+Returns an Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance Catalog object
 
 .EXAMPLE
 New-CIsaCatalog -IntegrationServices $IntegrationServices -SSISDBPassword "SuperStrong"
@@ -15,15 +16,15 @@ function New-CIsaCatalog
     [cmdletBinding()]
     param
     (
-    	# Microsoft.SqlServer.Management.IntegrationServices.IntegrationServices object with a System.Data.SqlClient.SqlConnection object.
+    	# Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance IntegrationServices Object.
 		[Parameter(Mandatory=$TRUE)]
 		[Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance]$IntegrationServices,
 
-        # Password for the SSISDB catalog
+        # Password for the SSISDB catalog.
 		[Parameter(Mandatory=$TRUE)]
 		[string]$SSISDBPassword,
 
-        # Name for the SSISDB catalog
+        # Name for the SSISDB catalog.
 		[Parameter(Mandatory=$FALSE)]
 		[string]$SSISDBName = 'SSISDB'
 
@@ -31,6 +32,9 @@ function New-CIsaCatalog
     Begin{
         $StartTime = Get-Date -UFormat "%T"
         Write-Verbose -Message "$($StartTime) - Start Function $($MyInvocation.MyCommand)"
+        If($IntegrationServices.GetType().Name -notlike "IntegrationServices" ){
+            Write-Error -Message "Variable IntegrationServices is not a integrationservices" -ErrorAction Stop
+        }
     }
 
     Process{

@@ -11,6 +11,6 @@ $IntegrationServices = New-Object "Microsoft.SqlServer.Management.IntegrationSer
 
 
 Foreach($ConfigFolder in $Config.SSISDB.Folders.Folder){
-    $Folder = Get-CIsaFolder  -IntegrationServicesObject $IntegrationServices -FolderName $ConfigFolder.Name -Verbose
+    $Folder = Get-CIsaFolder  -IntegrationServices $IntegrationServices -FolderName $ConfigFolder.Name
     Remove-CIsaFolder -Folder $Folder -Verbose
 }

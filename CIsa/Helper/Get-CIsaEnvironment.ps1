@@ -1,15 +1,15 @@
 ﻿<#
 
 .SYNOPSIS
-Get environment objects from a folder.
+Get EnvironmentInfo objects from a folder.
 
 .DESCRIPTION
-Returns environment as Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance objects from a given folder.
+Returns one ore more Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance EnvironmentInfo objects or null from a given folder.
 If the function is called without an environment name, then all environments will be returned.
 
 .EXAMPLE
-Get-CIsaEnvironment -Folder (Get-CIsaFolder -IntegrationServicesObject $IntegrationServices -FolderName "FolderName")
-Get-CIsaEnvironment -Folder (Get-CIsaFolder -IntegrationServicesObject $IntegrationServices -FolderName "FolderName" -EnvironmentName "TestProject")
+Get-CIsaEnvironment -Folder $Folder
+Get-CIsaEnvironment -Folder $Folder -EnvironmentName "Dev"
 
 #>
 function Get-CIsaEnvironment
@@ -17,7 +17,7 @@ function Get-CIsaEnvironment
     [cmdletBinding()]
     param
     (
-    	# Folder object
+    	# Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance CatalogFolder object
 		[Parameter(Mandatory=$TRUE)]
 		[Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance]$Folder,
 
@@ -29,6 +29,10 @@ function Get-CIsaEnvironment
     Begin{
         $StartTime = Get-Date -UFormat "%T"
         Write-Verbose -Message "$($StartTime) - Start Function $($MyInvocation.MyCommand)"
+
+        If($Folder.GetType().Name -notlike "CatalogFolder"){
+	        Write-Error -Message "Variable Folder is not a CatalogFolder" -ErrorAction Stop
+        }
     }
 
     Process{

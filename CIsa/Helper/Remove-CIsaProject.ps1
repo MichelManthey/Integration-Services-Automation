@@ -4,13 +4,13 @@
 Removes a project from a folder.
 
 .DESCRIPTION
-Removes a project from a folder.
+Removes a ProjectInfo from a CatalogFolder.
 
 .NOTES
-TBD Removes Enironments first
+TBD Removes Enironments first asd
 
 .EXAMPLE
-Remove-CIsaProject -Folder (Get-CIsaFolder -IntegrationServicesObject $IntegrationServices -FolderName "FolderName") -ProjectName "test"
+Remove-CIsaProject -Folder $Folder -ProjectName "test"
 
 #>
 function Remove-CIsaProject
@@ -18,7 +18,7 @@ function Remove-CIsaProject
     [cmdletBinding()]
     param
     (
-    	# Folder object
+    	# Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance CatalogFolder object
 		[Parameter(Mandatory=$TRUE)]
 		[Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance]$Folder,
 
@@ -31,6 +31,10 @@ function Remove-CIsaProject
     Begin{
         $StartTime = Get-Date -UFormat "%T"
         Write-Verbose -Message "$($StartTime) - Start Function $($MyInvocation.MyCommand)"
+
+        If($Folder.GetType().Name -notlike "CatalogFolder" ){
+            Write-Error -Message "Variable Folder is not a catalogfolder" -ErrorAction Stop
+        }
     }
 
     Process{

@@ -1,56 +1,60 @@
 ﻿<#
 
 .SYNOPSIS
-Creates a new folder.
+Creates a new CatalogFolder.
 
 .DESCRIPTION
-Creates a folder as an Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance object for a given integration services object.
-The IntegrationServicesObject can be catalog object or an integration services object.
+Creates a Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance CatalogFolder object for a given IntegrationServicesObject.
+The IntegrationServicesObject can be Catalog object or an integration services object.
 
 .EXAMPLE
-New-CIsaFolder -IntegrationServicesObject $IntegrationServicesObject -FolderName "Test"
+New-CIsaFolder -Catalog $Catalog -FolderName "Test"
 
 #>
 function New-CIsaFolder
 {
-    [cmdletBinding()]
+    [CmdletBinding(DefaultParametersetName='ByCatalog')] 
     param
     (
-    	# Can be an integration services or a catalog object
-		[Parameter(Mandatory=$TRUE)]
-		[Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance]$IntegrationServicesObject,
+        # Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance Catalog object.
+        [Parameter(ParameterSetName='ByCatalog',Mandatory=$TRUE)]
+        [Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance]$Catalog,
 
-    	# Name of the folder that will be created
+        # Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance IntegrationServices object.
+		[Parameter(ParameterSetName='ByIntegrationServices',Mandatory=$TRUE)]
+        [Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance]$IntegrationServices,
+
+    	# Name of the folder that will be created.
 		[Parameter(Mandatory=$TRUE)]
 		[string]$FolderName, 
 
-        # Description of the folder that will be created
+        # Description of the folder that will be created.
 		[Parameter(Mandatory=$false)]
-		[string]$FolderDescription = ''
+		[string]$FolderDescription = ' '
 
     )
 
     Begin{
         $StartTime = Get-Date -UFormat "%T"
         Write-Verbose -Message "$($StartTime) - Start Function $($MyInvocation.MyCommand)"
+
+
+        If($Catalog -and $Catalog.GetType().Name -notlike "Catalog" ){
+            Write-Error -Message "Variable Catalog is not a Catalog" -ErrorAction Stop
+        }
+
+        If($IntegrationServices -and $IntegrationServices.GetType().Name -notlike "IntegrationServices" ){
+            Write-Error -Message "Variable IntegrationServices is not a IntegrationServices" -ErrorAction Stop
+        }elseif($IntegrationServices -and $IntegrationServices.GetType().Name -like "IntegrationServices" ){
+            Write-Verbose -Message "Select catalog by IntegrationServices"
+            $Catalog = Get-CIsaCatalog -IntegrationServices $IntegrationServices
+            If(!$Catalog){
+               Write-Error -Message "Catalog does not exists" -ErrorAction Stop -RecommendedAction "Use Get-Help New-CIsaCatalog"
+            }
+        }
     }
 
     Process{
-        switch ($IntegrationServicesObject.GetType().Name){
-            "IntegrationServices"{
-                Write-Verbose -Message "Select by integration services"
-                $Catalog = Get-CIsaCatalog -IntegrationServices $IntegrationServicesObject
-            }
-            "Catalog"{
-                Write-Verbose -Message "Select by catalog"
-                $Catalog = $IntegrationServicesObject
-            }
-            default{
-                Write-Warning -Message "TBD"
-            }
-        }
-
-
         $Folder= New-Object 'Microsoft.SqlServer.Management.IntegrationServices.CatalogFolder' ($Catalog, $FolderName, $FolderDescription)
         $Folder.Create()
         Return $Folder

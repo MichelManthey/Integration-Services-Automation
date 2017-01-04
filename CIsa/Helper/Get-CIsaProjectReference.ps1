@@ -1,42 +1,70 @@
 ﻿<#
-
 .SYNOPSIS
-TBD
+Get a connection between a project to an environment.
 
 .DESCRIPTION
-TBD
+Get a Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance EnvironmentReference object between a ProjectInfo from a folder to an EnvironmentInfo. 
 
-.NOTES
+.EXAMPLE
+Get-CIsaProjectReference -Project $Project -EnvironmentName "DEV"
 #>
 function Get-CIsaProjectReference
 {
-    [cmdletBinding()]
+
+    [CmdletBinding(DefaultParametersetName='ByProject')]  
     param
     (
-    	# TBD
-		[Parameter(Mandatory=$TRUE)]
+    	# Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance CatalogFolder object.
+		[Parameter(ParameterSetName='ByProjectName',Mandatory=$FALSE)]
 		[Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance]$Folder,
 
-    	# TBD
+        # Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance ProjectInfo object.
+		[Parameter(ParameterSetName='ByProject',Mandatory=$TRUE)]
+        [Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance]$Project,
+        
+        # Name of the project. 
+        [Parameter(ParameterSetName='ByProjectName',Mandatory=$TRUE)]
+        [string]$ProjectName,
+
+    	# Name of the environment.
 		[Parameter(Mandatory=$TRUE)]
 		[string]$EnvironmentName,
 
-        # TBD
-		[Parameter(Mandatory=$TRUE)]
-		[string]$ProjectName
+        # Name of the folder.
+        [Parameter(ParameterSetName='ByProject',Mandatory=$TRUE)]
+        [String]$FolderName
+
+
     )
 
-    Begin{}
+    Begin{
+        $StartTime = Get-Date -UFormat "%T"
+        Write-Verbose -Message "$($StartTime) - Start Function $($MyInvocation.MyCommand)"
+
+        If($Folder -and $Folder.GetType().Name -notlike "CatalogFolder" ){
+            Write-Error -Message "Variable Folder is not a CatalogFolder" -ErrorAction Stop
+        }elseif($Folder -and $Folder.GetType().Name -like "CatalogFolder" ){
+            $FolderName = $Folder.Name
+            $Project = $Folder.Projects[$ProjectName] 
+        } 
+        
+        If($Project -and $Project.GetType().Name -notlike "ProjectInfo" ){
+            Write-Error -Message "Variable Project is not a ProjectInfo" -ErrorAction Stop
+        }
+
+
+    }
 
     Process{
-
-        $Project = $Folder.Projects[$ProjectName] 
-        $EnvironmentReference = $Project.References.Item($EnvironmentName, $Folder.Name)   
-
+        $EnvironmentReference = $Project.References.Item($EnvironmentName, $FolderName)
         Return $EnvironmentReference
     }
 
-    End{}
+    End{
+        $EndTime = Get-Date -UFormat "%T"
+        $Timespan = NEW-TIMESPAN -Start $StartTime -End $EndTime
+        Write-Verbose -Message "Finished $($EndTime) with $($Timespan.TotalSeconds) seconds"
+    }
 
 
 }

@@ -1,10 +1,10 @@
 ﻿<#
 
 .SYNOPSIS
-Get a SSISDB object.
+Get a CatalogFolder object.
 
 .DESCRIPTION
-Returns the SSISDB as an Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance object from a given integration services object. 
+Returns a Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance CatalogFolder object from an IntegrationServices object. 
 
 .EXAMPLE
 Get-CIsaCatalog -IntegrationServices $IntegrationServices
@@ -15,7 +15,7 @@ function Get-CIsaCatalog
     [cmdletBinding()]
     param
     (
-    	# Microsoft.SqlServer.Management.IntegrationServices.IntegrationServices object with a System.Data.SqlClient.SqlConnection object.
+    	# Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance IntegrationServices object
 		[Parameter(Mandatory=$TRUE)]
 		[Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance]$IntegrationServices,
 
@@ -27,6 +27,9 @@ function Get-CIsaCatalog
     Begin{
         $StartTime = Get-Date -UFormat "%T"
         Write-Verbose -Message "$($StartTime) - Start Function $($MyInvocation.MyCommand)"
+        If($IntegrationServices.GetType().Name -notlike "IntegrationServices" ){
+            Write-Error -Message "Variable Folder is not a IntegrationServices" -ErrorAction Stop
+        }
     }
 
     Process{

@@ -1,5 +1,5 @@
 ﻿$ModulePath = "D:\Users\DBR\Projects\Powershell\Cisa\CIsa"
-$Path = "$($ModulePath)\CIsa.config.simple.xml"
+$Path = "$($ModulePath)\CIsa.example.config.simple.xml"
 
 Import-Module $ModulePath -Force
 
@@ -9,9 +9,8 @@ $Config = ([xml](Get-Content -Path $Path -ErrorAction Stop)).Config
 $SqlConnection = New-Object System.Data.SqlClient.SqlConnection $Config.General.SqlConnectionString
 $IntegrationServices = New-Object "Microsoft.SqlServer.Management.IntegrationServices.IntegrationServices" $SqlConnection
 
-
 # Create Project via Config
-Invoke-CIsaFolder -IntegrationServicesObject $IntegrationServices -FolderName "Microsoft_sql-server-samples_DBR" -PathToConfig $Path
+Invoke-CIsaFolder -IntegrationServices $IntegrationServices -FolderName "Microsoft_sql-server-samples" -PathToConfig $Path
 
 # Invoke via helper functions
 $FolderName = "Microsoft_sql-server-samples_way2"
@@ -22,8 +21,8 @@ $Catalog = Get-CIsaCatalog -IntegrationServices $IntegrationServices
 If(!$Catalog){
     $Catalog = New-CIsaCatalog -IntegrationServices $IntegrationServices -SSISDBPassword "SuperPassword1+" -SSISDBName "SSISDB"
 }
-$Folder = Get-CIsaFolder -IntegrationServicesObject $IntegrationServices -FolderName $FolderName
+$Folder = Get-CIsaFolder -IntegrationServices $IntegrationServices -FolderName $FolderName
 If(!$Folder){
-    $Folder = New-CIsaFolder -FolderName $FolderName -FolderDescription $FolderDescription -IntegrationServicesObject $IntegrationServices
+    $Folder = New-CIsaFolder -FolderName $FolderName -FolderDescription $FolderDescription -IntegrationServices $IntegrationServices
 }
-New-CIsaProject -Folder $Folder -IspacSourcePath $IspacSourcePath -ProjectName $ProjectName -ErrorAction Stop
+New-CIsaProject -Folder $Folder -IspacSourcePath $IspacSourcePath -ProjectName $ProjectName

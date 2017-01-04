@@ -10,7 +10,7 @@ $IntegrationServices = New-Object "Microsoft.SqlServer.Management.IntegrationSer
 
 
 # Create Project via Config
-$Folder = Invoke-CIsaFolder -IntegrationServicesObject $IntegrationServices -FolderName "Microsoft_sql-server-samples" -PathToConfig $Path
+$Folder = Invoke-CIsaFolder -IntegrationServices $IntegrationServices -FolderName "Microsoft_sql-server-samples" -PathToConfig $Path
 
 #Create Environment by ProjectName
 Invoke-CIsaProjectReference -Folder $Folder -PathToConfig $Path -ProjectName "Daily ETL"

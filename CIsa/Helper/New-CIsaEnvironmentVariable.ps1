@@ -1,57 +1,66 @@
 ﻿<#
 
 .SYNOPSIS
-TBD
+Creates a variable for an environment.
 
 .DESCRIPTION
-TBD
+Creates a Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance EnvironmentVariable object for a Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance EnvironmentInfo.
+If the variable exists, it is not overwritten. To override a variable use -Override.
+					
+.EXAMPLE
+New-CIsaEnvironmentVariable -VariableName 'EnvInitialCatalog_Source' -VariableType 'String' -VariableDefaultValue 'WideWorldImporters' -Sensitivity "false" -Description "Source InitialCatalog"
 
-.NOTES
 #>
 function New-CIsaEnvironmentVariable
 {
     [cmdletBinding()]
     param
     (
-    	# TBD
+		# Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance EnvironmentInfo object.
 		[Parameter(Mandatory=$TRUE)]
 		[Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance]$Environment,
 
-        # TBD
+        # Name of the variable.
         [Parameter(Mandatory=$TRUE)]
         [string]$VariableName,
 
-        # TBD
+        # Type of the variable.
         [Parameter(Mandatory=$TRUE)]
         [string]$VariableType,
 
-        # TBD
+        # Default value of the variable.
         [Parameter(Mandatory=$TRUE)]
         [string]$VariableDefaultValue,
 
-        # TBD
+        # Wether variable is saved encrypted or not.
         [Parameter(Mandatory=$TRUE)]
         [ValidateSet("true","false")] 
         [String]$VariableSensitivity,
 
-        # TBD
+        # Description of the variable.
         [Parameter(Mandatory=$TRUE)]
-        [string]$VariableDescription,
+        [string]$VariableDescription = " ",
 
-        # TBD
+        # Whether the variable should be overwritten if it exists. Standard is not to override.
         [Parameter(Mandatory=$false)]
         [Switch]$Override
 
     )
-    Begin{}
-
-    Process{
-        
+    Begin{
+        $StartTime = Get-Date -UFormat "%T"
+        Write-Verbose -Message "$($StartTime) - Start Function $($MyInvocation.MyCommand)"
+		If($Environment.GetType().Name -notlike "EnvironmentInfo"){
+	        Write-Error -Message "Variable Environment is not a EnvironmentInfo" -ErrorAction Stop
+        }
+    
         if($VariableSensitivity -like "true"){
             [bool]$VariableSensitivity = $TRUE
         }else{
             [bool]$VariableSensitivity = $false
         }
+    }
+
+    Process{
         if($Environment.Variables[$VariableName]){
             if($Override){
                 Write-Verbose "$($VariableName) is existing and will be overriden"
@@ -69,5 +78,9 @@ function New-CIsaEnvironmentVariable
         return($Environment)
     }
 
-    End{}
+    End{
+        $EndTime = Get-Date -UFormat "%T"
+        $Timespan = NEW-TIMESPAN -Start $StartTime -End $EndTime
+        Write-Verbose -Message "Finished $($EndTime) with $($Timespan.TotalSeconds) seconds"    
+    }
 }

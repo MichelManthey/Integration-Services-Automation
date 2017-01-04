@@ -35,7 +35,7 @@ function Invoke-CIsaProjectReference
         }
 
         If($Folder -and $Folder.GetType().Name -notlike "CatalogFolder" ){
-            Write-Error -Message "Variable Folder is not a catalog folder" -ErrorAction Stop
+            Write-Error -Message "Variable Folder is not a catalogfolder" -ErrorAction Stop
         }
 
         if($Project){
@@ -52,7 +52,7 @@ function Invoke-CIsaProjectReference
         try{
            $Folder.Refresh()
         }Catch{
-           Write-Error -Message "Problem refreshing Folder." -ErrorAction Stop -RecommendedAction "Maybe Folder is not syncron with serverside. Try refesh integration services"
+           Write-Error -Message "Problem refreshing Folder." -ErrorAction Stop -RecommendedAction "Maybe Folder is not synchronous with server side. Try refresh integration services"
         }
     }
 
@@ -86,7 +86,7 @@ function Invoke-CIsaProjectReference
        Write-Verbose -Message "Creates references between project and linked Environments"
        Foreach($ConfigReference in $ConfigProject.References.Reference){
            $TmpEnvironment = $Config.SSISDB.Environments.Environment | Where-Object "EnvId" -Like $ConfigReference.EnvId
-           $EnvironmentReference = Get-CIsaProjectReference -Folder $Folder -EnvironmentName $TmpEnvironment.Name -ProjectName $Project.Name
+           $EnvironmentReference = Get-CIsaProjectReference -Project $Project -EnvironmentName $TmpEnvironment.Name -FolderName $Folder.Name
            if(!$EnvironmentReference){
                New-CIsaProjectReference -Folder $Folder -EnvironmentName $TmpEnvironment.Name -ProjectName $Project.Name
            }
@@ -94,7 +94,7 @@ function Invoke-CIsaProjectReference
            
            $TmpReference = $Config.SSISDB.References.Reference| Where-Object "RefId" -Like $ConfigReference.RefId
            Foreach($ConfigVariableProject in $TmpReference.Variables.Variable){
-               Set-CIsaVariable -Project $Project -ProjectParamName $ConfigVariableProject.ProjectParam -VariableName $ConfigVariableProject.VariableName
+               Set-CIsaEnvironmentVariable -Project $Project -ProjectParamName $ConfigVariableProject.ProjectParam -VariableName $ConfigVariableProject.VariableName
            }
            $Project.Alter()
            $EnvironmentReference = Get-CIsaProjectReference -Folder $Folder -EnvironmentName $TmpEnvironment.Name -ProjectName $Project.Name
