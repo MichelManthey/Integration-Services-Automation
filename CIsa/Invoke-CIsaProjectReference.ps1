@@ -1,29 +1,35 @@
 ﻿<#
 
 .SYNOPSIS
-TBD
+Creates Environment References to an existing Projects using an config.xml
 
 .DESCRIPTION
-TBD
+Creates EnvironmentInfo, EnvironmentVariable and EnvironmentReference objects and link them to a ProjectInfo Object. 
+Existing EnvironmentVariable objects will be overridden.
+
+.EXAMPLE
+Invoke-CIsaProjectReference -Project $Project -PathToConfig "...\CIsa\CIsa.config.simple.xml"
+Invoke-CIsaProjectReference -Folder $Folder -PathToConfig "...\CIsa\CIsa.config.simple.xml" -ProjectName "Test"
+
 #>
 function Invoke-CIsaProjectReference
 {
-    [CmdletBinding(DefaultParametersetName='Project')]  
+    [CmdletBinding(DefaultParametersetName='ByProject')]  
     param
     (
-        # Path to Config
-        [Parameter(ParameterSetName='Folder',Mandatory=$FALSE)]
+        # Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance CatalogFolder object.
+        [Parameter(ParameterSetName='ByFolder',Mandatory=$FALSE)]
 		[Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance]$Folder,
 
-    	# Can be Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance folder or Project object 
-		[Parameter(ParameterSetName='Project',Mandatory=$TRUE)]
+    	# Can be Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance ProjectInfo Object.
+		[Parameter(ParameterSetName='ByProject',Mandatory=$TRUE)]
         [Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance]$Project,
 
-        # Path to Config
-		[Parameter(ParameterSetName='Folder',Mandatory=$TRUE)]
+        # Name of the Project. Is only needed when using ByFolder.
+		[Parameter(ParameterSetName='ByFolder',Mandatory=$TRUE)]
 		[string]$ProjectName,
 
-        # Path to Config
+        # Path to Config.
 		[Parameter(Mandatory=$TRUE)]
 		[string]$PathToConfig
     )

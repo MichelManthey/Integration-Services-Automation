@@ -1,10 +1,10 @@
 ﻿<#
 
 .SYNOPSIS
-Creates a catalogfolder with all projects using an config.xml
+Creates a folder with all projects using an config.xml
 
 .DESCRIPTION
-Creates a catalogfolder with all projects using an config.xml If a ProjectName is given only this project will be created
+Creates a CatalogFolder with all projects using an config.xml If a ProjectName is given only this project will be created.
 The projects will be created without environments variables.
 They can either be created via an IntegrationServices object or via a Catalog object.
 If Invoke-CIsaFolder is used ByIntegrationServices a catalog will be created if it does not exist.
