@@ -1,10 +1,10 @@
 ﻿<#
 
 .SYNOPSIS
-Removes a EnvironmentInfo from a CatalogFolder.
+Removes an EnvironmentInfo from a CatalogFolder.
 
 .DESCRIPTION
-Removes a EnvironmentInfo from a CatalogFolder using an Folder with an EnvironmentName or an environment object
+Removes an EnvironmentInfo from a CatalogFolder using a Folder with an EnvironmentName or an environment object
 
 .EXAMPLE
 Remove-CIsaEnvironment -Folder $Folder -EnvironmentName "DEV"
@@ -23,7 +23,7 @@ function Remove-CIsaEnvironment
         [Parameter(ParameterSetName='ByEnvironment',Mandatory=$TRUE)]
         [Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance]$Environment,
         
-        # Name of the Environment, wich will be removed.
+        # Name of the Environment which will be removed.
         [Parameter(ParameterSetName='ByEnvironmentName',Mandatory=$TRUE)]
         [string]$EnvironmentName
     )
@@ -37,7 +37,7 @@ function Remove-CIsaEnvironment
         }  
 
         If($Environment -and $Environment.GetType().Name -notlike "EnvironmentInfo" ){
-            Write-Error -Message "Variable Environment is not a EnvironmentInfo" -ErrorAction Stop
+            Write-Error -Message "Variable Environment is not an EnvironmentInfo" -ErrorAction Stop
         }  
     }
 
