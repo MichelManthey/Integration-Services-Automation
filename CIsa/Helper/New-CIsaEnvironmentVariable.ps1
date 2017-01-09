@@ -5,7 +5,7 @@ Creates a variable for an environment.
 
 .DESCRIPTION
 Creates a Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance EnvironmentVariable object for a Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance EnvironmentInfo.
-If the variable exists, it is not overwritten. To override a variable use -Override.
+If the variable exists, it is not overridden. To override a variable use -Override.
 					
 .EXAMPLE
 New-CIsaEnvironmentVariable -VariableName 'EnvInitialCatalog_Source' -VariableType 'String' -VariableDefaultValue 'WideWorldImporters' -Sensitivity "false" -Description "Source InitialCatalog"
@@ -32,7 +32,7 @@ function New-CIsaEnvironmentVariable
         [Parameter(Mandatory=$TRUE)]
         [string]$VariableDefaultValue,
 
-        # Wether variable is saved encrypted or not.
+        # Whether variable is saved encrypted or not.
         [Parameter(Mandatory=$TRUE)]
         [ValidateSet("true","false")] 
         [String]$VariableSensitivity,
@@ -41,7 +41,7 @@ function New-CIsaEnvironmentVariable
         [Parameter(Mandatory=$TRUE)]
         [string]$VariableDescription = " ",
 
-        # Whether the variable should be overwritten if it exists. Standard is not to override.
+        # Whether the variable should be overridden if it exists. Standard is not to override.
         [Parameter(Mandatory=$false)]
         [Switch]$Override
 
@@ -63,7 +63,7 @@ function New-CIsaEnvironmentVariable
     Process{
         if($Environment.Variables[$VariableName]){
             if($Override){
-                Write-Verbose "$($VariableName) is existing and will be overriden"
+                Write-Verbose "$($VariableName) is existing and will be overridden"
                 $Environment.Variables.Remove($VariableName)
                 $Environment.Alter()
                 $Environment.Variables.Add($VariableName,[System.TypeCode]::$VariableType,$VariableDefaultValue,$VariableSensitivity,$VariableDescription)
