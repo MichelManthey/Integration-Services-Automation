@@ -7,7 +7,7 @@ Removes a project from a folder.
 Removes a ProjectInfo from a CatalogFolder.
 
 .NOTES
-TBD Removes Enironments first asd
+TBD Removes Environments first asd
 
 .EXAMPLE
 Remove-CIsaProject -Folder $Folder -ProjectName "test"
@@ -22,7 +22,7 @@ function Remove-CIsaProject
 		[Parameter(Mandatory=$TRUE)]
 		[Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance]$Folder,
 
-        # Name of the project, wich should be removed
+        # Name of the project which should be removed
         [Parameter(Mandatory=$TRUE)]
         [string]$ProjectName
 
@@ -33,7 +33,7 @@ function Remove-CIsaProject
         Write-Verbose -Message "$($StartTime) - Start Function $($MyInvocation.MyCommand)"
 
         If($Folder.GetType().Name -notlike "CatalogFolder" ){
-            Write-Error -Message "Variable Folder is not a catalogfolder" -ErrorAction Stop
+            Write-Error -Message "Variable Folder is not a CatalogFolder" -ErrorAction Stop
         }
     }
 
@@ -50,7 +50,7 @@ function Remove-CIsaProject
     End{
         $EndTime = Get-Date -UFormat "%T"
         $Timespan = NEW-TIMESPAN -Start $StartTime -End $EndTime
-        Write-Verbose -Message "Finished $($EndTime) with $($Timespan.TotalSeconds) seconds"
+        Write-Verbose -Message "Finished $($EndTime) in $($Timespan.TotalSeconds) seconds"
     }
 
 
