@@ -21,7 +21,7 @@ function Get-CIsaEnvironmentVariable
 		[Parameter(Mandatory=$TRUE)]
 		[Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance]$Environment,
 
-        # Name of the Variable wich should be returned, if not given all variables will be returned 
+        # Name of the Variable which should be returned, if not given all variables will be returned 
         [Parameter(Mandatory=$FALSE)]
         [string]$VariableName
     )
@@ -36,7 +36,7 @@ function Get-CIsaEnvironmentVariable
     Process{
         Write-Verbose -Message "Select Environment Variable"
         if(!$Environment.Variables){
-            Write-Verbose -Message "Environment has no Variables"
+            Write-Verbose -Message "Environment has no variables"
             $Variables = $null
         }else{
             if($VariableName){
