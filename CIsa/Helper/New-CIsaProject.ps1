@@ -5,7 +5,7 @@ Creates a new project within folder.
 
 .DESCRIPTION
 Creates a Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance ProjectInfo object for a given CatalogFolder.
-A project will be overridden if the same name exist in the folder.
+A project will be overridden if the same name exists in the folder.
 
 .EXAMPLE
 New-CIsaProject -Folder $Folder -IspacSourcePath "C:\Projekte\test.ispac" -ProjectName "test"
@@ -33,14 +33,14 @@ function New-CIsaProject
         Write-Verbose -Message "$($StartTime) - Start Function $($MyInvocation.MyCommand)"
 
         If($Folder -and $Folder.GetType().Name -notlike "CatalogFolder" ){
-            Write-Error -Message "Variable Folder is not a catalogfolder" -ErrorAction Stop
+            Write-Error -Message "Variable Folder is not a CatalogFolder" -ErrorAction Stop
         }
     }
 
     Process{
         [byte[]] $IspacSource = [System.IO.File]::ReadAllBytes($IspacSourcePath)
         if($Folder.Projects[$ProjectName]){
-            Write-Verbose "Project $($ProjectName) exist and will be overriden"
+            Write-Verbose "Project $($ProjectName) exists and will be overridden"
         }
 
         $DeployOperation = $Folder.DeployProject($Projectname,$IspacSource)
@@ -52,7 +52,7 @@ function New-CIsaProject
     End{
         $EndTime = Get-Date -UFormat "%T"
         $Timespan = NEW-TIMESPAN -Start $StartTime -End $EndTime
-        Write-Verbose -Message "Finished $($EndTime) with $($Timespan.TotalSeconds) seconds"
+        Write-Verbose -Message "Finished $($EndTime) in $($Timespan.TotalSeconds) seconds"
     }
 
 
