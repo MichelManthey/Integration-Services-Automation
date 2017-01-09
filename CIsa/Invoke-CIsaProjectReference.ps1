@@ -1,10 +1,10 @@
 ﻿<#
 
 .SYNOPSIS
-Creates Environment References to an existing Projects using an config.xml
+Creates Environment References to an existing project using a config.xml
 
 .DESCRIPTION
-Creates EnvironmentInfo, EnvironmentVariable and EnvironmentReference objects and link them to a ProjectInfo Object. 
+Creates EnvironmentInfo, EnvironmentVariable and EnvironmentReference objects and links them to a ProjectInfo Object. 
 Existing EnvironmentVariable objects will be overridden.
 
 .EXAMPLE
@@ -58,7 +58,7 @@ function Invoke-CIsaProjectReference
         try{
            $Folder.Refresh()
         }Catch{
-           Write-Error -Message "Problem refreshing Folder." -ErrorAction Stop -RecommendedAction "Maybe Folder is not synchronous with server side. Try refresh integration services"
+           Write-Error -Message "Problem refreshing Folder." -ErrorAction Stop -RecommendedAction "Maybe Folder is not synchronous with server side. Try refresh Integration Services"
         }
     }
 
