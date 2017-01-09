@@ -1,14 +1,14 @@
 ﻿<#
 
 .SYNOPSIS
-Creates a folder with all projects using an config.xml
+Creates a folder with all projects using a config.xml
 
 .DESCRIPTION
-Creates a CatalogFolder with all projects using an config.xml If a ProjectName is given only this project will be created.
-The projects will be created without environments variables.
+Creates a CatalogFolder with all projects using a config.xml. If a ProjectName is given only this project will be created.
+The projects will be created without environment variables.
 They can either be created via an IntegrationServices object or via a Catalog object.
 If Invoke-CIsaFolder is used ByIntegrationServices a catalog will be created if it does not exist.
-If the Folder exist, projects within config will be added.
+If the Folder exists projects within config will be added.
 
 
 .EXAMPLE
@@ -34,7 +34,7 @@ function Invoke-CIsaFolder
 		[Parameter(Mandatory=$TRUE)]
 		[string]$FolderName,
 
-   	    # Defines project which should be created. If not given all Projects will be created.
+   	    # Defines project which should be created. If not given all projects will be created.
 		[Parameter(Mandatory=$FALSE)]
 		[string]$ProjectName,        
 
@@ -53,7 +53,7 @@ function Invoke-CIsaFolder
 
 
         If($IntegrationServices -and $IntegrationServices.GetType().Name -notlike "IntegrationServices" ){
-            Write-Error -Message "Variable IntegrationServices is not a IntegrationServices" -ErrorAction Stop
+            Write-Error -Message "Variable IntegrationServices is not an IntegrationService" -ErrorAction Stop
         }elseif($IntegrationServices -and $IntegrationServices.GetType().Name -like "IntegrationServices" ){
             Write-Verbose -Message "Select catalog by IntegrationServices"
             $Catalog = Get-CIsaCatalog -IntegrationServices $IntegrationServices
