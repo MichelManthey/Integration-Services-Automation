@@ -23,13 +23,13 @@ function Remove-CIsaFolder
         $StartTime = Get-Date -UFormat "%T"
         Write-Verbose -Message "$($StartTime) - Start Function $($MyInvocation.MyCommand)"
         If($Folder.GetType().Name -notlike "CatalogFolder" ){
-            Write-Error -Message "Variable Folder is not a catalogfolder" -ErrorAction Stop
+            Write-Error -Message "Variable Folder is not a CatalogFolder" -ErrorAction Stop
         }
 
         try{
             $Folder.Refresh()
         }Catch{
-            Write-Error -Message "Problem refreshing Folder." -ErrorAction Stop -RecommendedAction "Maybe Folder is not synchronous with server side. Try refresh integration services"
+            Write-Error -Message "Problem refreshing Folder." -ErrorAction Stop -RecommendedAction "Maybe Folder is not synchronous with server side. Try refresh Integration Services"
         }
     }
 
@@ -49,7 +49,7 @@ function Remove-CIsaFolder
     End{
         $EndTime = Get-Date -UFormat "%T"
         $Timespan = NEW-TIMESPAN -Start $StartTime -End $EndTime
-        Write-Verbose -Message "Finished $($EndTime) with $($Timespan.TotalSeconds) seconds"
+        Write-Verbose -Message "Finished $($EndTime) in $($Timespan.TotalSeconds) seconds"
     }
 
 
