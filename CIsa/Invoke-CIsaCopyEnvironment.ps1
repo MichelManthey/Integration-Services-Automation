@@ -91,7 +91,7 @@ function Invoke-CIsaCopyEnvironment
                 New-CIsaEnvironmentVariable -Environment $DestinationEnvironment `
                                         -VariableName $var.Name `
                                         -VariableType $var.Type `
-                                        -VariableDefaultValue $var.Value `
+                                        -VariableDefaultValue ' ' `
                                         -VariableDescription $var.Description `                                        -Override `
                                         -VariableSensitivity
             }else{
