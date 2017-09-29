@@ -1,0 +1,9 @@
+C:\Users\DBretz\Ceteris\Projekte\Intern\Integration-Services-Automation\Demo\SampleSSIS\Database1\bin\Debug\CisaSample.dacpac
+C:\Users\DBretz\Ceteris\Projekte\Intern\Integration-Services-Automation\Demo\SampleSSIS\Database1\bin\Debug\Database1.dll
+C:\Users\DBretz\Ceteris\Projekte\Intern\Integration-Services-Automation\Demo\SampleSSIS\Database1\bin\Debug\Database1.pdb
+C:\Users\DBretz\Ceteris\Projekte\Intern\Integration-Services-Automation\Demo\SampleSSIS\Database1\obj\Debug\Model.xml
+C:\Users\DBretz\Ceteris\Projekte\Intern\Integration-Services-Automation\Demo\SampleSSIS\Database1\obj\Debug\refactor.xml
+C:\Users\DBretz\Ceteris\Projekte\Intern\Integration-Services-Automation\Demo\SampleSSIS\Database1\obj\Debug\postdeploy.sql
+C:\Users\DBretz\Ceteris\Projekte\Intern\Integration-Services-Automation\Demo\SampleSSIS\Database1\obj\Debug\predeploy.sql
+C:\Users\DBretz\Ceteris\Projekte\Intern\Integration-Services-Automation\Demo\SampleSSIS\Database1\obj\Debug\Database1.dll
+C:\Users\DBretz\Ceteris\Projekte\Intern\Integration-Services-Automation\Demo\SampleSSIS\Database1\obj\Debug\Database1.pdb

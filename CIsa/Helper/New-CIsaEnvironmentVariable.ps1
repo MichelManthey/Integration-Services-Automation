@@ -33,12 +33,11 @@ function New-CIsaEnvironmentVariable
         [string]$VariableDefaultValue,
 
         # Whether variable is saved encrypted or not.
-        [Parameter(Mandatory=$TRUE)]
-        [ValidateSet("true","false")] 
-        [String]$VariableSensitivity,
+        [Parameter(Mandatory=$FALSE)]
+        [Switch]$VariableSensitivity,
 
         # Description of the variable.
-        [Parameter(Mandatory=$TRUE)]
+        [Parameter(Mandatory=$FALSE)]
         [string]$VariableDescription = " ",
 
         # Whether the variable should be overridden if it exists. Standard is not to override.
@@ -51,12 +50,6 @@ function New-CIsaEnvironmentVariable
         Write-Verbose -Message "$($StartTime) - Start Function $($MyInvocation.MyCommand)"
 		If($Environment.GetType().Name -notlike "EnvironmentInfo"){
 	        Write-Error -Message "Variable Environment is not a EnvironmentInfo" -ErrorAction Stop
-        }
-    
-        if($VariableSensitivity -like "true"){
-            [bool]$VariableSensitivity = $TRUE
-        }else{
-            [bool]$VariableSensitivity = $false
         }
     }
 
@@ -75,6 +68,7 @@ function New-CIsaEnvironmentVariable
             Write-Verbose -Message "Add Environment Variable $($VariableName) to Environment $($Environment.Name)"
             $Environment.Variables.Add($VariableName,[System.TypeCode]::$VariableType,$VariableDefaultValue,$VariableSensitivity,$VariableDescription)
         }
+        $Environment.alter()
         return($Environment)
     }
 

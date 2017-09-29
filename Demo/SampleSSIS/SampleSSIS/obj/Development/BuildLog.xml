@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<BuildLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ProjectInfo>
+    <Name>SampleSSIS</Name>
+    <LastWriteTime>2017-09-29T07:54:08.1652054Z</LastWriteTime>
+    <LastKnownProtectionLevel>DontSaveSensitive</LastKnownProtectionLevel>
+  </ProjectInfo>
+  <LastBuildInfos>
+    <ProjectBuildItemInfo>
+      <Name>HelloWorld.dtsx</Name>
+      <LastWriteTime>2017-09-29T07:54:08.0947383Z</LastWriteTime>
+      <LastKnownProtectionLevel>DontSaveSensitive</LastKnownProtectionLevel>
+    </ProjectBuildItemInfo>
+  </LastBuildInfos>
+</BuildLog>

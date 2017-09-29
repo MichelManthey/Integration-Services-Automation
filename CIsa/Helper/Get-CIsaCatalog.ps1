@@ -1,10 +1,10 @@
 ﻿<#
 
 .SYNOPSIS
-Get a CatalogFolder object.
+Get a Catalog object.
 
 .DESCRIPTION
-Returns a Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance CatalogFolder object from an IntegrationServices object. 
+Returns a Microsoft.SqlServer.Management.Sdk.Sfc.SfcInstance Catalog object from an IntegrationServices object. 
 
 .EXAMPLE
 Get-CIsaCatalog -IntegrationServices $IntegrationServices
