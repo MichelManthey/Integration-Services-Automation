@@ -8,7 +8,8 @@ An overview of the SSISDB Objects can be found here:
 ![SSISDB objecs](https://www.ceteris.ag/wp-content/uploads/2017/10/SSIS_Server.png)
 
 
-**Demo**
+**Demos**
+
 At the moment some small demos can be found in this repo and will be in more detail described in the near future.
 
 
